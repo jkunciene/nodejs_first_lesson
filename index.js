@@ -40,6 +40,27 @@ app.get('/api/products/:id', (req, res) => {
     res.send(products);
  });
 
+//esamos prekes atnaujinimas
+app.put('/api/products/:id', (req, res)=>{
+    const my_product = products.find(product => product.id === parseInt(req.params.id));
+    if(!my_product) res.status(404).send("not found");
+
+    my_product.title = req.body.title;
+    res.send(my_product);
+});
+
+
+//esamos prekes trynimas, pasalinimas
+app.delete('/api/products/:id', (req, res)=>{
+    const my_product = products.find(product => product.id === parseInt(req.params.id));
+    if(!my_product) res.status(404).send("not found");
+
+    const product_index = products.indexOf(my_product);
+    products.splice(product_index, 1);
+
+    res.send(my_product);
+});
+
 
 //apsirasome port'a ant kurio veiks serveris
 const PORT = 5001;
